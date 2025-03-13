@@ -1,101 +1,267 @@
-
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     user-select: none;
     font-family: poppins, sans-serif;
-
 }
-body{
+
+body {
     overflow: hidden;
     background: rgb(0, 0, 0);
     background-size: cover;
-    
-}
-.navbar{
-    margin-top: 10px;
-}
-.logo{
-    width: 40px;
-    height: 40px;
-    filter:drop-shadow(0 0 10px white);
 }
 
-.myinfo
-{
+.navbar {
+    margin-top: 10px;
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+    filter: drop-shadow(0 0 10px white);
+}
+
+.log {
+    font-weight: bold;
+    font-size: 24px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.myinfo {
     position: relative;
     top: 200px;
     left: 150px;
     width: 500px;
-    color:white;
+    color: white;
     text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.73);
-   
-
-
+    z-index: 1;
 }
 
-.nav-link
-{
-    color:white;
+.nav-link {
+    color: white;
 }
-.nav-item{
-color: white;
-margin-left: 20px;
+
+.nav-item {
+    color: white;
+    margin-left: 20px;
 }
-.btn{
-    border:none;
-    color:white;
+
+.btn {
+    border: none;
+    color: white;
     background: transparent;
     border: 1px solid white;
     border-radius: 50px;
 }
-.holi{
-   
-    color:transparent;
-    background-clip: border-box;
+
+.holi {
     color: whitesmoke;
-    /* list-style: none; */
+    background-clip: border-box;
     font-size: 20px;
     font-weight: bold;
-    /* position: relative; */
-    /* top: 0; */
 }
-h1{
+
+h1 {
     font-size: 90px;
     font-weight: bold;
 }
 
-.nav-link:hover
-{
-   color: rgb(255, 0, 0);
-   text-shadow: 0 0 20px black;
+.nav-link:hover {
+    color: rgb(255, 0, 0);
+    text-shadow: 0 0 20px black;
 }
-video
-{
+
+video {
     position: absolute;
-    left:00px;
-    bottom: 00px;
+    left: 0;
+    bottom: 0;
     z-index: -2;
     height: auto;
-    /* width: 100%; */
     min-width: 100%;
     min-height: 100%;
-    filter: blur(100);
+    object-fit: cover;
 }
-.hue{
+
+.hue {
     color: rgb(240, 81, 2);
-    
     font-weight: bold;
     animation: hue 5s infinite;
 }
 
-@keyframes hue{
-    0%{
+@keyframes hue {
+    0% {
         -webkit-filter: hue-rotate(0deg);
     }
-    100%{
-
+    100% {
         -webkit-filter: hue-rotate(700deg);
+    }
+}
+
+/* Music control styles */
+#music-control {
+    transition: transform 0.3s ease;
+}
+
+#music-control:hover {
+    transform: scale(1.1);
+}
+
+#start-overlay {
+    transition: opacity 0.5s ease;
+}
+
+/* Media Queries for Responsive Design */
+
+/* Large devices (desktops, 992px and up) */
+@media screen and (min-width: 992px) {
+    .myinfo {
+        top: 200px;
+        left: 150px;
+        width: 500px;
+    }
+    
+    h1 {
+        font-size: 90px;
+    }
+    
+    .holi {
+        font-size: 20px;
+    }
+    
+    p {
+        font-size: 18px;
+    }
+}
+
+/* Medium devices (tablets, between 768px and 991px) */
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    .myinfo {
+        top: 180px;
+        left: 100px;
+        width: 450px;
+    }
+    
+    h1 {
+        font-size: 70px;
+    }
+    
+    .holi {
+        font-size: 18px;
+    }
+    
+    p {
+        font-size: 16px;
+    }
+}
+
+/* Small devices (landscape phones, between 576px and 767px) */
+@media screen and (min-width: 576px) and (max-width: 767px) {
+    .myinfo {
+        top: 150px;
+        left: 50px;
+        width: 400px;
+    }
+    
+    h1 {
+        font-size: 60px;
+    }
+    
+    .holi {
+        font-size: 16px;
+    }
+    
+    p {
+        font-size: 14px;
+    }
+    
+    .hue {
+        font-size: 24px;
+    }
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media screen and (max-width: 575px) {
+    .myinfo {
+        top: 130px;
+        left: 20px;
+        width: 85%;
+        padding-right: 20px;
+    }
+    
+    h1 {
+        font-size: 42px;
+    }
+    
+    .holi {
+        font-size: 16px;
+    }
+    
+    p {
+        font-size: 14px;
+    }
+    
+    .hue {
+        font-size: 20px;
+    }
+    
+    #start-overlay div {
+        padding: 15px;
+    }
+    
+    #start-overlay h2 {
+        font-size: 20px;
+    }
+    
+    #start-overlay div div {
+        width: 80px;
+        height: 80px;
+    }
+    
+    #music-control {
+        bottom: 15px;
+        right: 15px;
+    }
+}
+
+/* For very small devices */
+@media screen and (max-width: 360px) {
+    .myinfo {
+        top: 120px;
+        left: 15px;
+    }
+    
+    h1 {
+        font-size: 36px;
+    }
+    
+    .holi {
+        font-size: 14px;
+    }
+    
+    .hue {
+        font-size: 18px;
+    }
+}
+
+/* Fix for video on iOS devices */
+@supports (-webkit-touch-callout: none) {
+    video {
+        position: fixed;
+    }
+}
+
+/* Orientation-specific adjustments */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+    .myinfo {
+        top: 80px;
+    }
+    
+    h1 {
+        font-size: 36px;
+    }
+    
+    #start-overlay div {
+        padding: 10px;
     }
 }
