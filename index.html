@@ -18,8 +18,6 @@
       <button class="navbar-toggler" type="button" data-toggle="collapse" >
         <span class="navbar-toggler-icon"></span>
       </button>
-   
-     
       </div>
     </nav>
 
@@ -27,8 +25,6 @@
       <h1 class="holi">Hey! Happy Holi</h1>
       <h1>I am Kiran</h1>
           <p>Wishing you and your loved ones a very colourful Holi<br>May you forget all your worries and enjoy this day to the fullest.<br> <h2 class="hue">Happy Holi!</h2></p>
-
-              
     </div>
 
     <video autoplay loop playsinline muted>
@@ -37,59 +33,102 @@
     </video>
 
     <!-- Background Music -->
-    <audio id="bg-music" loop>
+    <audio id="bg-music" preload="auto">
         <source src="121.mp3" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
 
-    <!-- Music Status Notification -->
-    <div id="music-notification" style="position: fixed; bottom: 20px; right: 20px; background-color: rgba(255, 255, 255, 0.8); padding: 10px; border-radius: 5px; display: none;">
-        Click anywhere to play music
+    <!-- Overlay for user interaction -->
+    <div id="start-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 9999; display: flex; justify-content: center; align-items: center; cursor: pointer;">
+        <div style="background-color: white; padding: 20px; border-radius: 10px; text-align: center; max-width: 80%;">
+            <h2 style="color: #ff5722;">Welcome to Happy Holi 2025!</h2>
+            <p>Click anywhere to enter with music</p>
+            <div style="width: 100px; height: 100px; margin: 0 auto; background-color: #ff5722; border-radius: 50%; display: flex; justify-content: center; align-items: center;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white" viewBox="0 0 16 16">
+                    <path d="M6 3.5a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5zm4 0a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- Small music control button (appears after entry) -->
+    <div id="music-control" style="position: fixed; bottom: 20px; right: 20px; background-color: rgba(255, 255, 255, 0.7); padding: 10px; border-radius: 50%; cursor: pointer; display: none; z-index: 999;">
+        <svg id="music-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#ff5722" viewBox="0 0 16 16">
+            <path d="M6 13c0 1.105-1.12 2-2.5 2S1 14.105 1 13c0-1.104 1.12-2 2.5-2s2.5.896 2.5 2zm9-2c0 1.105-1.12 2-2.5 2s-2.5-.895-2.5-2 1.12-2 2.5-2 2.5.895 2.5 2z"/>
+            <path fill-rule="evenodd" d="M14 11V2h1v9h-1zM6 3v10H5V3h1z"/>
+            <path d="M5 2.905a1 1 0 0 1 .9-.995l8-.8a1 1 0 0 1 1.1.995V3L5 4V2.905z"/>
+        </svg>
+        <svg id="mute-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#ff5722" viewBox="0 0 16 16" style="display: none;">
+            <path d="M6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06zm7.137 2.096a.5.5 0 0 1 0 .708L12.207 8l1.647 1.646a.5.5 0 0 1-.708.708L11.5 8.707l-1.646 1.647a.5.5 0 0 1-.708-.708L10.793 8 9.146 6.354a.5.5 0 1 1 .708-.708L11.5 7.293l1.646-1.647a.5.5 0 0 1 .708 0z"/>
+        </svg>
     </div>
 
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
+      document.addEventListener("DOMContentLoaded", function() {
           var audio = document.getElementById("bg-music");
-          var notification = document.getElementById("music-notification");
+          var overlay = document.getElementById("start-overlay");
+          var musicControl = document.getElementById("music-control");
+          var musicIcon = document.getElementById("music-icon");
+          var muteIcon = document.getElementById("mute-icon");
           
-          // Show notification after a short delay
-          setTimeout(function() {
-              notification.style.display = "block";
-          }, 1500);
+          // Set audio properties
+          audio.loop = true;
+          audio.volume = 0.7;
           
-          // Try to autoplay
-          var playPromise = audio.play();
-          
-          if (playPromise !== undefined) {
-              playPromise.then(function() {
-                  // Autoplay started successfully
-                  notification.style.display = "none";
+          // Function to play music and remove overlay
+          function startExperience() {
+              // Play audio
+              audio.play().then(function() {
+                  // Success - hide overlay and show music control
+                  overlay.style.display = "none";
+                  musicControl.style.display = "block";
               }).catch(function(error) {
-                  // Autoplay was prevented
-                  notification.style.display = "block";
-                  
-                  // Add click event to the entire document to play music
-                  document.addEventListener("click", function playOnClick() {
-                      audio.play();
-                      notification.style.display = "none";
-                      // Remove the click event after first click
-                      document.removeEventListener("click", playOnClick);
-                  });
+                  // If autoplay still fails, just hide overlay anyway
+                  console.log("Audio autoplay failed: ", error);
+                  overlay.style.display = "none";
+                  musicControl.style.display = "block";
               });
           }
           
-          // Add keyboard controls for music
-          document.addEventListener("keydown", function(e) {
-              // Press 'M' to mute/unmute
-              if (e.key === 'm' || e.key === 'M') {
-                  audio.muted = !audio.muted;
+          // Add click event to overlay
+          overlay.addEventListener("click", startExperience);
+          
+          // Toggle music on/off when clicking the music control
+          musicControl.addEventListener("click", function() {
+              if (audio.paused) {
+                  audio.play();
+                  musicIcon.style.display = "block";
+                  muteIcon.style.display = "none";
+              } else {
+                  audio.pause();
+                  musicIcon.style.display = "none";
+                  muteIcon.style.display = "block";
               }
-              // Press 'P' to play/pause
-              if (e.key === 'p' || e.key === 'P') {
+          });
+          
+          // Attempt autoplay on page load (will likely fail in most browsers)
+          audio.play().then(function() {
+              // If autoplay somehow succeeds, hide overlay immediately
+              overlay.style.display = "none";
+              musicControl.style.display = "block";
+          }).catch(function(error) {
+              // Expected behavior - overlay remains visible for user interaction
+              console.log("Initial autoplay failed as expected: ", error);
+          });
+          
+          // Keyboard controls
+          document.addEventListener("keydown", function(e) {
+              // Press Space to toggle music
+              if (e.code === "Space" && document.activeElement.tagName !== "INPUT" && document.activeElement.tagName !== "TEXTAREA") {
+                  e.preventDefault(); // Prevent page scrolling
                   if (audio.paused) {
                       audio.play();
+                      musicIcon.style.display = "block";
+                      muteIcon.style.display = "none";
                   } else {
                       audio.pause();
+                      musicIcon.style.display = "none";
+                      muteIcon.style.display = "block";
                   }
               }
           });
